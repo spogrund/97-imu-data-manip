@@ -3,7 +3,7 @@ import csv
 import numpy as np
 from compression import uncompress
 
-uncompress('fourieroutputsencrypted.csv')
+uncompress('fourieroutputsencrypted.csv.gz')
 
 def decrypt():
     fernet = Fernet(key)
