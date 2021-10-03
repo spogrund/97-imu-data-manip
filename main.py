@@ -76,6 +76,6 @@ if __name__ == '__main__':
         AccNED1.append(arr[27])
         AccNED2.append(arr[28])
         ACCNED3.append(arr[29])
-    print(timeArr)
+    
 
 
