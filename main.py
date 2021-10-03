@@ -38,13 +38,13 @@ if __name__ == '__main__':
     AccNED2 = []
     ACCNED3 = []
 
-    print(len(rows))
+
     for record in rows[1:len(rows)-1]:
         arr = record.split()
 
         timeArr.append(arr[0])
 
-        magX.append(arr[1])
+        magX.append(float(arr[1]))
         magY.append(arr[2])
         magZ.append(arr[3])
         accX.append(arr[4])
