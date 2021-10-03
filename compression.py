@@ -35,10 +35,10 @@ def hex2float(h):
    return binascii.unhexlify(h)
 
 def compressgz(x):
-   os.system('gzip --keep ' + x)
+   os.system('gzip ' + x)
   # with open(os.path.join(os.path.dirname(__file__), x), 'rb') as src, gzip.open(os.path.join(os.path.dirname(__file__), y), 'wb') as dst:
       #   dst.writelines(src)   
-         
+compressgz('fourieroutputs.csv')         
 def uncompress(x):
    #with gzip.open(os.path.join(os.path.dirname(__file__), x), 'rb') as src, open(os.path.join(os.path.dirname(__file__), y), 'w') as dst:
        #  dst.writelines(src)
