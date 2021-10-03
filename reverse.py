@@ -1,7 +1,9 @@
 import csv
 from cryptography.fernet import Fernet
 import numpy as np
+from compression import uncompress
 
+uncompress('fourieroutputsencrypted.csv.gz')
 
 def decrypt():
     fernet = Fernet(key)
@@ -17,6 +19,7 @@ def decrypt():
     # writing the decrypted data
     with open('fourieroutputsdecrypted.csv', 'wb') as dec_file:
         dec_file.write(decrypted)
+
 
 
 if __name__ == '__main__':
