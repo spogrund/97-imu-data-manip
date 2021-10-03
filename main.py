@@ -1,6 +1,7 @@
 import csv
 import numpy as np
 import datetime
+import encrypt
 from fourierclass import invfourier, fourier
 from compression import  compressgz , uncompress
 import os
@@ -43,7 +44,7 @@ if __name__ == '__main__':
     record = rows[1]
     arr = record.split()
     startTime = datetime.datetime.strptime(arr[0], '%Y-%m-%d-%H:%M:%S.%f')
-    print(startTime)
+
     for record in rows[1:len(rows)-1]:
         arr = record.split()
         timeNow = datetime.datetime.strptime(arr[0], '%Y-%m-%d-%H:%M:%S.%f')
@@ -113,11 +114,11 @@ if __name__ == '__main__':
     AccNED2 = fourier(AccNED2)
     ACCNED3 = fourier(ACCNED3)
     
-with open(os.path.join(os.path.dirname(__file__), 'fourieroutputs.csv'), mode= 'w') as f:
-    writer = csv.writer(f)
-    writer.writerow(header)
-    for i in range(0,len(rows)-2):
-        writer.writerow([timeArr[i],(magX[i]),(magY[i]),(magZ[i]),(accX[i]),(accY[i]),(accZ[i]),(gyroX[i]),(gyroY[i]),(gyroZ[i]),(Temp[i]),(Pres[i]),(Yaw[i]),(Pitch[i]), (Roll[i]), (DCM1[i]),  (DCM2[i]), (DCM3[i]),(DCM4[i]),(DCM5[i]),(DCM6[i]),(DCM7[i]),(DCM8[i]), (DCM9[i]), MagNED1[i], MagNED2[i],MagNED3[i],AccNED1[i],AccNED2[i],ACCNED3[i]])
-    
+    with open(os.path.join(os.path.dirname(__file__), 'fourieroutputs.csv'), mode= 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in range(0,len(rows)-2):
+            writer.writerow([timeArr[i],(magX[i]),(magY[i]),(magZ[i]),(accX[i]),(accY[i]),(accZ[i]),(gyroX[i]),(gyroY[i]),(gyroZ[i]),(Temp[i]),(Pres[i]),(Yaw[i]),(Pitch[i]), (Roll[i]), (DCM1[i]),  (DCM2[i]), (DCM3[i]),(DCM4[i]),(DCM5[i]),(DCM6[i]),(DCM7[i]),(DCM8[i]), (DCM9[i]), MagNED1[i], MagNED2[i],MagNED3[i],AccNED1[i],AccNED2[i],ACCNED3[i]])
 
+    encrypt.encryptfile()
     
