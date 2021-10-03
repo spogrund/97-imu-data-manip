@@ -1,11 +1,16 @@
 import csv
-#from cryptography.fernet import Fernet
+from cryptography.fernet import Fernet
 import numpy as np
 from compression import uncompress
 
-uncompress('fourieroutputsencrypted.csv.gz')
+
+
+
+
 
 def decrypt():
+    with open('filekey.key', 'rb') as filekey:
+        key = filekey.read()
     fernet = Fernet(key)
 
     # opening the encrypted file
@@ -95,5 +100,7 @@ def decrypt():
             AccNED2.append(float(arr[28]))
             ACCNED3.append(float(arr[29]))
 
+
 if __name__ == '__main__':
-    pass
+    uncompress('fourieroutputsencrypted.csv.gz')
+    decrypt()
