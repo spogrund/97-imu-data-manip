@@ -1,6 +1,6 @@
 import csv
 import numpy as np
-
+import datetime
 if __name__ == '__main__':
     with open('2018-09-19-03_57_11_VN100.csv') as file:
         content = file.readlines()
@@ -37,14 +37,16 @@ if __name__ == '__main__':
     AccNED1 = []
     AccNED2 = []
     ACCNED3 = []
-
-
+    record = rows[1]
+    arr = record.split()
+    startTime = datetime.datetime.strptime(arr[0], '%Y-%m-%d-%H:%M:%S.%f')
+    print(startTime)
     for record in rows[1:len(rows)-1]:
         arr = record.split()
-
-        timeArr.append(arr[0])
-
-        magX.append(float(arr[1]))
+        timeNow = datetime.datetime.strptime(arr[0], '%Y-%m-%d-%H:%M:%S.%f')
+        timeint = (timeNow-startTime).total_seconds()
+        timeArr.append(timeint)
+        magX.append(arr[1])
         magY.append(arr[2])
         magZ.append(arr[3])
         accX.append(arr[4])
@@ -74,6 +76,6 @@ if __name__ == '__main__':
         AccNED1.append(arr[27])
         AccNED2.append(arr[28])
         ACCNED3.append(arr[29])
-
+    print(timeArr)
 
 
