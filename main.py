@@ -83,7 +83,8 @@ if __name__ == '__main__':
         AccNED1.append(float(arr[27]))
         AccNED2.append(float(arr[28]))
         ACCNED3.append(float(arr[29]))
-   
+    
+    print("data collected")
     
 
     timeArr = fourier(timeArr)
@@ -116,7 +117,7 @@ if __name__ == '__main__':
     AccNED1 = fourier(AccNED1)
     AccNED2 = fourier(AccNED2)
     ACCNED3 = fourier(ACCNED3)
-    
+    print("fourier done") 
     with open(os.path.join(os.path.dirname(__file__), 'fourieroutputs.csv'), mode= 'w') as f:
         writer = csv.writer(f)
         writer.writerow(header)
@@ -124,11 +125,14 @@ if __name__ == '__main__':
             writer.writerow([timeArr[i],(magX[i]),(magY[i]),(magZ[i]),(accX[i]),(accY[i]),(accZ[i]),(gyroX[i]),(gyroY[i]),(gyroZ[i]),(Temp[i]),(Pres[i]),(Yaw[i]),(Pitch[i]), (Roll[i]), (DCM1[i]),  (DCM2[i]), (DCM3[i]),(DCM4[i]),(DCM5[i]),(DCM6[i]),(DCM7[i]),(DCM8[i]), (DCM9[i]), MagNED1[i], MagNED2[i],MagNED3[i],AccNED1[i],AccNED2[i],ACCNED3[i]])
 
     encrypt.encryptfile()
+    print("encrypted")
+    file2 = round(os.path.getsize("fourieroutputsencrypted.csv") / (1024 * 1000), 2)
     compressgz('fourieroutputsencrypted.csv')
+    print("compressed")
     runtimeEnd = datetime.datetime.now()
     file1 = round(os.path.getsize("fourieroutputsencrypted.csv.gz") / (1024 * 1000), 2)
-    file2 = round(os.path.getsize("fourieroutputsencrypted.csv") / (1024 * 1000), 2)
-    sys.stdout.write(str(round((runtimeEnd-runtimeStart).total_seconds(), 2) )+"\n")
-    sys.stdout.write(str(file2)+ " MB\n")
-    sys.stdout.write(str(file1) + " MB\n")
-    sys.stdout.write(str(round((file1/file2)*100,2)) + "%")
+    
+    print(str(round((runtimeEnd-runtimeStart).total_seconds(), 2) )+"\n")
+    print(str(file2)+ " MB\n")
+    print(str(file1) + " MB\n")
+    print(str(round((file1/file2)*100,2)) + "%")
