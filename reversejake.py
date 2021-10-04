@@ -2,10 +2,12 @@ import csv
 from cryptography.fernet import Fernet
 import numpy as np
 from compression import uncompress
+import os
 
 uncompress('fourieroutputsencrypted.csv.gz')
 
 def decrypt():
+    key = Fernet.key()
     fernet = Fernet(key)
 
     # opening the encrypted file
@@ -127,7 +129,13 @@ def reversefourier():
     AccNED2 = invfourier(AccNED2)
     ACCNED3 = invfourier(ACCNED3)
 
-#reversefourier()     
+reversefourier()     
 
+with open(os.path.join(os.path.dirname(__file__), 'unfourieroutputs.csv'), mode= 'w') as f:
+    writer = csv.writer(f)
+    writer.writerow(header)
+    for i in range(0,len(rows)-2):
+        writer.writerow([timeArr[i],(magX[i]),(magY[i]),(magZ[i]),(accX[i]),(accY[i]),(accZ[i]),(gyroX[i]),(gyroY[i]),(gyroZ[i]),(Temp[i]),(Pres[i]),(Yaw[i]),(Pitch[i]), (Roll[i]), (DCM1[i]),  (DCM2[i]), (DCM3[i]),(DCM4[i]),(DCM5[i]),(DCM6[i]),(DCM7[i]),(DCM8[i]), (DCM9[i]), MagNED1[i], MagNED2[i],MagNED3[i],AccNED1[i],AccNED2[i],ACCNED3[i]])
+        
 if __name__ == '__main__':
     pass
