@@ -43,6 +43,6 @@ def uncompress(x):
    #with gzip.open(os.path.join(os.path.dirname(__file__), x), 'rb') as src, open(os.path.join(os.path.dirname(__file__), y), 'w') as dst:
        #  dst.writelines(src)
    #filename = '/Users/jakeburditt/Desktop/3097/'+x
-   os.system('gunzip --keep ' + x)
+   os.system('gunzip ' + x)
    
-#uncompress('fourieroutputsencrypted.csv.gz')       
+#uncompress('fourieroutputs123.csv.gz')       
