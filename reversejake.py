@@ -7,6 +7,8 @@ import os
 uncompress('fourieroutputsencrypted.csv.gz')
 
 def decrypt():
+    with open('filekey.key', 'rb') as filekey:
+        key = filekey.read()
     key = Fernet.key()
     fernet = Fernet(key)
 
