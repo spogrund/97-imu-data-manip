@@ -2,10 +2,13 @@ import csv
 import numpy as np
 import datetime
 import encrypt
+import os
+import sys
 from fourierclass import invfourier, fourier
 from compression import  compressgz , uncompress
 import os
 if __name__ == '__main__':
+    runtimeStart = datetime.datetime.now()
     with open('2018-09-19-03_57_11_VN100.csv') as file:
         content = file.readlines()
     header = content[:1]
@@ -122,3 +125,10 @@ if __name__ == '__main__':
 
     encrypt.encryptfile()
     compressgz('fourieroutputsencrypted.csv')
+    runtimeEnd = datetime.datetime.now()
+    file1 = round(os.path.getsize("fourieroutputsencrypted.csv.gz") / (1024 * 1000), 2)
+    file2 = round(os.path.getsize("fourieroutputsencrypted.csv") / (1024 * 1000), 2)
+    sys.stdout.write(str(round((runtimeEnd-runtimeStart).total_seconds(), 2) )+"\n")
+    sys.stdout.write(str(file2)+ " MB\n")
+    sys.stdout.write(str(file1) + " MB\n")
+    sys.stdout.write(str(round((file1/file2)*100,2)) + "%")
