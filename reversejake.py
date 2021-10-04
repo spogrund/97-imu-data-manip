@@ -1,15 +1,21 @@
 import csv
 from cryptography.fernet import Fernet
 import numpy as np
+import datetime
+import encrypt
+import time
 from compression import uncompress
 import os
 
-uncompress('fourieroutputsencrypted.csv.gz')
+
+def decomp():
+    uncompress('fourieroutputsencrypted.csv.gz')
+
 
 def decrypt():
     with open('filekey.key', 'rb') as filekey:
         key = filekey.read()
-    key = Fernet.key()
+
     fernet = Fernet(key)
 
     # opening the encrypted file
@@ -23,10 +29,12 @@ def decrypt():
     # writing the decrypted data
     with open('fourieroutputsdecrypted.csv', 'wb') as dec_file:
         dec_file.write(decrypted)
-decrypt()
-with open('fourieroutputsdecrypted.csv') as file:
+
+
+def writefour():
+    with open('fourieroutputsdecrypted.csv') as file:
         content = file.readlines()
-       
+
         header = content[:1]
         rows = content[1:]
         i = 0
@@ -60,14 +68,14 @@ with open('fourieroutputsdecrypted.csv') as file:
         AccNED1 = []
         AccNED2 = []
         ACCNED3 = []
-        record = rows[1]
+        record = rows[2]
         arr = record.split()
         startTime = datetime.datetime.strptime(arr[0], '%Y-%m-%d-%H:%M:%S.%f')
-        
-        for record in rows[1:len(rows)-1]:
+
+        for record in rows[1:len(rows) - 1]:
             arr = record.split()
             timeNow = datetime.datetime.strptime(arr[0], '%Y-%m-%d-%H:%M:%S.%f')
-            timeint = (timeNow-startTime).total_seconds()
+            timeint = (timeNow - startTime).total_seconds()
             timeArr.append(timeint)
             magX.append(float(arr[1]))
             magY.append(float(arr[2]))
@@ -98,7 +106,9 @@ with open('fourieroutputsdecrypted.csv') as file:
             MagNED3.append(float(arr[26]))
             AccNED1.append(float(arr[27]))
             AccNED2.append(float(arr[28]))
-            ACCNED3.append(float(arr[29]))       
+            ACCNED3.append(float(arr[29]))
+
+
 def reversefourier():
     timeArr = invfourier(timeArr)
     magX = invfourier(magX)
@@ -131,13 +141,23 @@ def reversefourier():
     AccNED2 = invfourier(AccNED2)
     ACCNED3 = invfourier(ACCNED3)
 
-reversefourier()     
 
-with open(os.path.join(os.path.dirname(__file__), 'unfourieroutputs.csv'), mode= 'w') as f:
-    writer = csv.writer(f)
-    writer.writerow(header)
-    for i in range(0,len(rows)-2):
-        writer.writerow([timeArr[i],(magX[i]),(magY[i]),(magZ[i]),(accX[i]),(accY[i]),(accZ[i]),(gyroX[i]),(gyroY[i]),(gyroZ[i]),(Temp[i]),(Pres[i]),(Yaw[i]),(Pitch[i]), (Roll[i]), (DCM1[i]),  (DCM2[i]), (DCM3[i]),(DCM4[i]),(DCM5[i]),(DCM6[i]),(DCM7[i]),(DCM8[i]), (DCM9[i]), MagNED1[i], MagNED2[i],MagNED3[i],AccNED1[i],AccNED2[i],ACCNED3[i]])
-        
+
+def writeout():
+    with open(os.path.join(os.path.dirname(__file__), 'unfourieroutputs.csv'), mode='w') as f:
+        writer = csv.writer(f)
+        writer.writerow(header)
+        for i in range(0, len(rows) - 2):
+            writer.writerow(
+                [timeArr[i], (magX[i]), (magY[i]), (magZ[i]), (accX[i]), (accY[i]), (accZ[i]), (gyroX[i]), (gyroY[i]),
+                 (gyroZ[i]), (Temp[i]), (Pres[i]), (Yaw[i]), (Pitch[i]), (Roll[i]), (DCM1[i]), (DCM2[i]), (DCM3[i]),
+                 (DCM4[i]), (DCM5[i]), (DCM6[i]), (DCM7[i]), (DCM8[i]), (DCM9[i]), MagNED1[i], MagNED2[i], MagNED3[i],
+                 AccNED1[i], AccNED2[i], ACCNED3[i]])
+
+
 if __name__ == '__main__':
-    pass
+    decomp()
+    decrypt()
+    #writefour()
+    #reversefourier()
+    #writeout()
