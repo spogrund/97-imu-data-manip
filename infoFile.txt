@@ -1,0 +1,1 @@
+encrypted and it took: 2.074587sencrypted and it took: 1.258188scompressed and it took: 0.093519s
